@@ -38,13 +38,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <h1 className="font-mono font-bold text-sm sm:text-base text-neutral-900 dark:text-neutral-100 tracking-tight leading-tight group-hover:underline underline-offset-4 truncate max-w-[180px] sm:max-w-xs">
                   {teamName || 'team'}
                 </h1>
-                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded border border-neutral-300 dark:border-neutral-700 text-neutral-600 dark:text-neutral-400 bg-neutral-100 dark:bg-neutral-900">
-                  team
-                </span>
               </div>
-              <p className="text-xs text-neutral-500 font-sans hidden sm:block">
-                Evaluación diaria y feedback
-              </p>
             </div>
           </div>
 
@@ -53,7 +47,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="toggle-sound-btn"
               onClick={onToggleSound}
-              className={`p-1.5 sm:px-2.5 sm:py-1.5 rounded-lg border text-xs transition-colors flex items-center gap-1.5 ${
+              className={`p-1.5 rounded-lg border text-xs transition-colors flex items-center justify-center ${
                 soundEnabled
                   ? 'border-neutral-900 dark:border-neutral-100 bg-neutral-900 text-white dark:bg-white dark:text-neutral-900'
                   : 'border-neutral-200 dark:border-neutral-800 text-neutral-400 dark:text-neutral-500 hover:border-neutral-400'
@@ -62,7 +56,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               aria-label="Toggle Sound"
             >
               {soundEnabled ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
-              <span className="text-[11px] hidden sm:inline">{soundEnabled ? 'Sonido: On' : 'Sonido: Off'}</span>
             </button>
 
             <button

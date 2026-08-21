@@ -75,16 +75,65 @@ export const TeammateCard: React.FC<TeammateCardProps> = ({
     formatStyle
   );
 
-  const renderStatusIcon = (iconName: string, className: string = 'w-3.5 h-3.5') => {
+  const getBorderAccent = (statusId: string) => {
+    switch (statusId) {
+      case 'ok': return 'border-l-4 border-l-emerald-500';
+      case 'apoyo': return 'border-l-4 border-l-amber-500';
+      case 'foco': return 'border-l-4 border-l-indigo-500';
+      case 'bloqueo': return 'border-l-4 border-l-rose-500';
+      default: return 'border-l-4 border-l-neutral-200 dark:border-l-neutral-800';
+    }
+  };
+
+  const getAvatarStyles = (statusId: string) => {
+    switch (statusId) {
+      case 'ok': return 'bg-emerald-500 text-white';
+      case 'apoyo': return 'bg-amber-500 text-white';
+      case 'foco': return 'bg-indigo-500 text-white';
+      case 'bloqueo': return 'bg-rose-500 text-white';
+      default: return 'bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900';
+    }
+  };
+
+  const getStatusStyles = (statusId: string, isSelected: boolean) => {
+    if (!isSelected) {
+      switch (statusId) {
+        case 'ok':
+          return 'border-neutral-250 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 text-neutral-600 dark:text-neutral-400 hover:border-emerald-300 dark:hover:border-emerald-800 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50/10 dark:hover:bg-emerald-950/10';
+        case 'apoyo':
+          return 'border-neutral-250 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 text-neutral-600 dark:text-neutral-400 hover:border-amber-300 dark:hover:border-amber-800 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50/10 dark:hover:bg-amber-950/10';
+        case 'foco':
+          return 'border-neutral-250 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 text-neutral-600 dark:text-neutral-400 hover:border-indigo-300 dark:hover:border-indigo-800 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50/10 dark:hover:bg-indigo-950/10';
+        case 'bloqueo':
+          return 'border-neutral-250 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 text-neutral-600 dark:text-neutral-400 hover:border-rose-300 dark:hover:border-rose-800 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50/10 dark:hover:bg-rose-950/10';
+        default:
+          return 'border-neutral-250 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 text-neutral-600 dark:text-neutral-400 hover:border-neutral-400 dark:hover:border-neutral-650';
+      }
+    }
+    switch (statusId) {
+      case 'ok':
+        return 'border-emerald-500 bg-emerald-500 text-white dark:bg-emerald-950/80 dark:text-emerald-400 dark:border-emerald-500 font-bold';
+      case 'apoyo':
+        return 'border-amber-500 bg-amber-500 text-white dark:bg-amber-950/80 dark:text-amber-400 dark:border-amber-500 font-bold';
+      case 'foco':
+        return 'border-indigo-500 bg-indigo-500 text-white dark:bg-indigo-950/80 dark:text-indigo-400 dark:border-indigo-500 font-bold';
+      case 'bloqueo':
+        return 'border-rose-500 bg-rose-500 text-white dark:bg-rose-950/80 dark:text-rose-400 dark:border-rose-500 font-bold';
+      default:
+        return 'border-neutral-900 dark:border-neutral-100 bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 font-bold';
+    }
+  };
+
+  const renderStatusIcon = (iconName: string, isSelected: boolean, className: string = 'w-3.5 h-3.5') => {
     switch (iconName) {
       case 'check':
-        return <CheckCircle2 className={className} />;
+        return <CheckCircle2 className={`${className} ${isSelected ? '' : 'text-emerald-500'}`} />;
       case 'help':
-        return <HelpCircle className={className} />;
+        return <HelpCircle className={`${className} ${isSelected ? '' : 'text-amber-500'}`} />;
       case 'zap':
-        return <Zap className={className} />;
+        return <Zap className={`${className} ${isSelected ? '' : 'text-indigo-500'}`} />;
       case 'alert':
-        return <AlertCircle className={className} />;
+        return <AlertCircle className={`${className} ${isSelected ? '' : 'text-rose-500'}`} />;
       default:
         return <CircleSlash className={className} />;
     }
@@ -93,21 +142,23 @@ export const TeammateCard: React.FC<TeammateCardProps> = ({
   return (
     <div
       id={`teammate-card-${teammate.id}`}
-      className="rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-3.5 sm:p-4 font-mono transition-all hover:border-neutral-400 dark:hover:border-neutral-700 shadow-2xs"
+      className={`rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-3.5 sm:p-4 font-mono transition-all hover:border-neutral-400 dark:hover:border-neutral-700 shadow-2xs ${getBorderAccent(currentStatus.id)}`}
     >
       {/* Header: Avatar, Name & Live Format Preview */}
       <div className="flex items-center justify-between gap-2.5 mb-3">
         <div className="flex items-center gap-2.5 min-w-0">
-          <div className="w-8 h-8 rounded-lg bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900 flex items-center justify-center font-bold text-xs select-none shrink-0 shadow-2xs">
+          <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs select-none shrink-0 shadow-2xs transition-colors duration-200 ${getAvatarStyles(currentStatus.id)}`}>
             {teammate.name.slice(0, 2).toUpperCase()}
           </div>
           <div className="min-w-0">
             <h3 className="font-bold text-sm sm:text-base text-neutral-900 dark:text-neutral-100 truncate tracking-tight">
               {teammate.name}
             </h3>
-            <span className="text-[11px] text-neutral-500">
-              {teammate.role || 'Miembro del equipo'}
-            </span>
+            {teammate.role && (
+              <span className="text-[11px] text-neutral-500 block">
+                {teammate.role}
+              </span>
+            )}
           </div>
         </div>
 
@@ -120,15 +171,8 @@ export const TeammateCard: React.FC<TeammateCardProps> = ({
         </div>
       </div>
 
-      {/* Status Selector (No emojis - Clean badge states) */}
+      {/* Status Selector */}
       <div className="space-y-1.5">
-        <div className="flex items-center justify-between text-xs text-neutral-600 dark:text-neutral-400">
-          <span>Estado</span>
-          <span className="font-medium text-neutral-800 dark:text-neutral-200 text-[11px]">
-            {currentStatus.shortLabel}
-          </span>
-        </div>
-
         <div className="grid grid-cols-5 gap-1">
           {STATUS_OPTIONS.map((status) => {
             const isSelected = currentStatus.id === status.id;
@@ -138,15 +182,11 @@ export const TeammateCard: React.FC<TeammateCardProps> = ({
                 type="button"
                 id={`status-btn-${teammate.id}-${status.id}`}
                 onClick={() => handleStatusSelect(status)}
-                className={`py-1.5 px-1 flex flex-col items-center justify-center rounded-lg border text-[10px] transition-all ${
-                  isSelected
-                    ? 'border-neutral-900 dark:border-neutral-100 bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 font-bold'
-                    : 'border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950 text-neutral-600 dark:text-neutral-400 hover:border-neutral-400 dark:hover:border-neutral-600'
-                }`}
+                className={`py-1.5 px-1 flex flex-col items-center justify-center rounded-lg border text-[10px] transition-all ${getStatusStyles(status.id, isSelected)}`}
                 title={status.shortLabel}
               >
                 <span className="mb-0.5">
-                  {renderStatusIcon(status.iconName)}
+                  {renderStatusIcon(status.iconName, isSelected)}
                 </span>
                 <span className="truncate max-w-full font-semibold">
                   {status.label}
@@ -161,9 +201,9 @@ export const TeammateCard: React.FC<TeammateCardProps> = ({
       <div className="mt-3 pt-2.5 border-t border-neutral-100 dark:border-neutral-800/80">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-1.5 text-xs text-neutral-700 dark:text-neutral-300">
-            <span>Estrellas:</span>
+            <span>Desempeño</span>
             <span className="text-xs font-bold px-1.5 py-0.5 rounded border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100">
-              {rating.stars}/5 {rating.stars > 0 && `(${formatStarsDisplay(rating.stars)})`}
+              {rating.stars} ★
             </span>
           </div>
 
@@ -201,8 +241,8 @@ export const TeammateCard: React.FC<TeammateCardProps> = ({
                 onClick={() => handleStarClick(starNum)}
                 className={`py-1.5 rounded-md border flex items-center justify-center gap-1 text-xs transition-all ${
                   isFilled
-                    ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 border-neutral-900 dark:border-white font-bold'
-                    : 'bg-neutral-50 dark:bg-neutral-950 border-neutral-200 dark:border-neutral-800 text-neutral-400 hover:border-neutral-400'
+                    ? 'bg-amber-500 text-white dark:bg-amber-950/80 dark:text-amber-400 border-amber-500 dark:border-amber-500 font-bold'
+                    : 'bg-neutral-50 dark:bg-neutral-950 border-neutral-200 dark:border-neutral-800 text-neutral-400 hover:border-amber-300 dark:hover:border-amber-800'
                 }`}
                 title={`${starNum} estrellas`}
                 aria-label={`Calificar con ${starNum} estrellas a ${teammate.name}`}
@@ -210,7 +250,7 @@ export const TeammateCard: React.FC<TeammateCardProps> = ({
                 <Star
                   className={`w-3.5 h-3.5 ${
                     isFilled
-                      ? 'fill-current text-current'
+                      ? 'fill-current text-white dark:text-amber-400'
                       : 'text-neutral-300 dark:text-neutral-700'
                   }`}
                 />

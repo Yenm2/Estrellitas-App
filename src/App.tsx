@@ -340,6 +340,7 @@ export default function App() {
                     rating={currentRating}
                     onUpdateRating={handleUpdateRating}
                     soundEnabled={soundEnabled}
+                    formatStyle={formatStyle}
                   />
                 );
               })}

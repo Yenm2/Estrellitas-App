@@ -5,7 +5,7 @@ import { playSuccessSound, triggerVibrate } from '../utils/audio';
 
 interface FeedbackActionBarProps {
   totalStars: number;
-  activeCount: number;
+  okCount: number;
   needHelpCount: number;
   onSendFeedback: (generalNote?: string) => void;
   soundEnabled: boolean;
@@ -14,7 +14,7 @@ interface FeedbackActionBarProps {
 
 export const FeedbackActionBar: React.FC<FeedbackActionBarProps> = ({
   totalStars,
-  activeCount,
+  okCount,
   needHelpCount,
   onSendFeedback,
   soundEnabled,
@@ -88,9 +88,9 @@ export const FeedbackActionBar: React.FC<FeedbackActionBarProps> = ({
               </div>
 
               <div className="hidden sm:flex items-center gap-2 text-xs text-neutral-600 dark:text-neutral-400 font-sans">
-                <span>[OK]: {activeCount}</span>
+                <span>OK: {okCount}</span>
                 {needHelpCount > 0 && (
-                  <span className="font-medium text-neutral-900 dark:text-neutral-100">[Alerta/Apoyo]: {needHelpCount}</span>
+                  <span className="font-semibold text-rose-500">Apoyo/Alerta: {needHelpCount}</span>
                 )}
               </div>
 
@@ -170,10 +170,6 @@ export const FeedbackActionBar: React.FC<FeedbackActionBarProps> = ({
             <div className="bg-neutral-50 dark:bg-neutral-950 rounded-lg p-3 border border-neutral-200 dark:border-neutral-800 font-mono whitespace-pre-wrap text-neutral-900 dark:text-neutral-100 select-all max-h-64 overflow-y-auto leading-relaxed">
               {previewText}
             </div>
-
-            <p className="text-[11px] text-neutral-500 font-sans">
-              Texto formateado listo para copiar y enviar por Slack, Teams o WhatsApp.
-            </p>
 
             <div className="flex items-center justify-end gap-2 pt-1 font-sans">
               <button

@@ -4,7 +4,7 @@ import { FormatStyle } from '../types';
 import { playStarSound, triggerVibrate } from '../utils/audio';
 
 interface QuickPresetBarProps {
-  onSetAllSun: () => void;
+  onSetAllOk: () => void;
   onAddStarToAll: () => void;
   onResetRatings: () => void;
   onCopyPreview: () => void;
@@ -19,7 +19,7 @@ interface QuickPresetBarProps {
 }
 
 export const QuickPresetBar: React.FC<QuickPresetBarProps> = ({
-  onSetAllSun,
+  onSetAllOk,
   onAddStarToAll,
   onResetRatings,
   onCopyPreview,
@@ -38,9 +38,9 @@ export const QuickPresetBar: React.FC<QuickPresetBarProps> = ({
     onAddStarToAll();
   };
 
-  const handleSunAll = () => {
+  const handleOkAll = () => {
     triggerVibrate(15);
-    onSetAllSun();
+    onSetAllOk();
   };
 
   return (
@@ -62,7 +62,6 @@ export const QuickPresetBar: React.FC<QuickPresetBarProps> = ({
 
         {/* Format Selector: Tags vs Solo Estrellas vs Texto */}
         <div className="flex items-center gap-1 bg-neutral-100 dark:bg-neutral-950 p-1 rounded-lg border border-neutral-200 dark:border-neutral-800 shrink-0">
-          <span className="text-[11px] text-neutral-500 px-1 font-sans">Formato:</span>
           <button
             type="button"
             onClick={() => onChangeFormatStyle('tags')}
@@ -73,7 +72,7 @@ export const QuickPresetBar: React.FC<QuickPresetBarProps> = ({
             }`}
             title="Formato con etiquetas: [OK] ★★★★★"
           >
-            [Tag + ★]
+            Tag + ★
           </button>
           <button
             type="button"
@@ -85,7 +84,7 @@ export const QuickPresetBar: React.FC<QuickPresetBarProps> = ({
             }`}
             title="Formato solo estrellas: Nombre ★★★★★"
           >
-            [Solo ★]
+            Solo ★
           </button>
           <button
             type="button"
@@ -97,7 +96,7 @@ export const QuickPresetBar: React.FC<QuickPresetBarProps> = ({
             }`}
             title="Formato con texto: Nombre (OK) ★★★★★"
           >
-            [(Texto) + ★]
+            Texto + ★
           </button>
         </div>
 
@@ -120,39 +119,33 @@ export const QuickPresetBar: React.FC<QuickPresetBarProps> = ({
 
       {/* Action Chips */}
       <div className="flex items-center gap-1.5 overflow-x-auto pb-0.5 scrollbar-none text-[11px] border-t border-neutral-100 dark:border-neutral-850 pt-2">
-        <span className="text-neutral-500 shrink-0 font-medium font-sans">
-          Acciones rápidas:
-        </span>
-
         <button
           type="button"
-          onClick={handleSunAll}
-          className="shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-md bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-800 dark:text-neutral-200 hover:border-neutral-400 transition-colors"
+          onClick={handleOkAll}
+          className="shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-md bg-neutral-100 dark:bg-neutral-850 border border-neutral-250 dark:border-neutral-800 text-neutral-800 dark:text-neutral-200 hover:border-neutral-400 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors"
         >
-          <CheckCircle2 className="w-3 h-3 text-neutral-700 dark:text-neutral-300" />
-          <span>Marcar [OK] a todos</span>
+          <CheckCircle2 className="w-3 h-3 text-emerald-500" />
+          <span>Todo OK</span>
         </button>
 
         <button
           type="button"
           onClick={handleStarAll}
-          className="shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-md bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-800 dark:text-neutral-200 hover:border-neutral-400 transition-colors"
+          className="shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-md bg-neutral-100 dark:bg-neutral-850 border border-neutral-250 dark:border-neutral-800 text-neutral-800 dark:text-neutral-200 hover:border-neutral-400 hover:text-amber-500 dark:hover:text-amber-400 transition-colors"
         >
-          <Star className="w-3 h-3 fill-current text-current" />
-          <span>+1 Estrella a todos</span>
+          <Star className="w-3 h-3 fill-current text-amber-550" />
+          <span>+1 Estrella</span>
         </button>
 
         <button
           type="button"
           onClick={onResetRatings}
-          className="shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-md bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-500 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 hover:border-neutral-400 transition-colors ml-auto"
+          className="shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-md bg-neutral-100 dark:bg-neutral-850 border border-neutral-250 dark:border-neutral-800 text-neutral-50 dark:text-neutral-400 hover:text-rose-600 dark:hover:text-rose-400 hover:border-rose-300 dark:hover:border-rose-900 transition-colors ml-auto"
         >
           <RotateCcw className="w-3 h-3" />
-          <span>Restablecer</span>
+          <span>Limpiar</span>
         </button>
       </div>
     </div>
   );
 };
-
-
